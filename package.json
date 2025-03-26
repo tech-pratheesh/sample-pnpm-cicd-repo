@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "scripts": {
+    "start": "pnpm -r start"
+  },
+  "workspaces": {
+    "packages": ["v1/views/*", "v1/packages/*"]
+  }
+}
