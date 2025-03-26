@@ -18,20 +18,31 @@ jobs:
         node-version: [18]
 
     steps:
+      # Checkout the code
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 20
 
+      # Setting up the node 
       - name: Setup Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'pnpm'
 
+      # Setting up pnpm
       - name: Install PNPM
         uses: pnpm/action-setup@v2
         with:
           version: 7.27.1
           run_install: false
+
+      - name: Get pnpm store directory
+        id: pnpm-cache
+        shell: bash
+        run: |
+          echo "STORE_PATH=$(pnpm store path)" >> $GITHUB_ENV
+          echo $GITHUB_ENV
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
